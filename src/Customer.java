@@ -104,5 +104,11 @@ public class Customer {
 		this.orderTaken = orderTaken;
 	}
 	
+	@Override
+	public String toString(){
+		return "Customer    ArrivalTurn:"+this.arrivalTurn+"   Uid: "+this.uid+"   Order time: "+this.orderTime+
+				"   Value: "+this.value+"   Patience: "+this.patienceLevel;
+	}
+	
 	
 }

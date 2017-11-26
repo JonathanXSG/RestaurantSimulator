@@ -1,5 +1,8 @@
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -8,38 +11,45 @@ public class Main {
 	static Scanner readFile;
 	static ArrayList<File> files = new ArrayList<File>();
 	static ArrayList<Customer> customers = new ArrayList<Customer>();
+	static BufferedReader bReader;
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 		try {
 			readFile = new Scanner(new File("input.txt"));
 		} catch (FileNotFoundException e) {
 			System.out.println(e);
 		}
-		
 		while(readFile.hasNext()) {
 			files.add(new File(readFile.nextLine()));
 			System.out.println("Found files: "+files.get(files.size()-1));
 		}
+		
+		try {
+			readCSVFile(files);
+		} catch (NumberFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void readCSVFile(ArrayList<File> files) throws NumberFormatException, IOException {
 		for (File file : files) {
-			try {
-				readFile = new Scanner(file);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			while(readFile.hasNextLine()) {
-				int arrival = Integer.valueOf(readFile.nextInt());
-				int uid = Integer.valueOf(readFile.nextInt());
-				int orderTime = Integer.valueOf(readFile.nextInt());
-				Double value = Double.valueOf(readFile.nextDouble());
-				int patience = Integer.valueOf(readFile.nextInt());
+			bReader = new BufferedReader(new FileReader(file));
+
+			String line = "";
+			String[] customerInfo;
+			while((line = bReader.readLine()) != null) {
+
+				customerInfo = line.split(",");
+				int arrival = Integer.valueOf(customerInfo[0]);
+				int uid = Integer.valueOf(customerInfo[1]);
+				int orderTime = Integer.valueOf(customerInfo[2]);
+				Double value = Double.valueOf(customerInfo[3]);
+				int patience = Integer.valueOf(customerInfo[4]);
 				customers.add(new Customer(arrival,uid,orderTime,value,patience));
-				System.out.println(customers.get(customers.size()-1));
+				System.out.println(customers.get(customers.size()-1).toString());
 			}
 		}
-		
 	}
 
 }
