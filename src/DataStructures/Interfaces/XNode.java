@@ -1,4 +1,4 @@
-package DataStructures;
+package DataStructures.Interfaces;
 
 public interface XNode<E> {
 	public E getElement();

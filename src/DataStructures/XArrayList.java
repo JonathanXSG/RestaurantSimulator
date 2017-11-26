@@ -1,47 +1,125 @@
 package DataStructures;
 
-public class XArrayList<E> implements XList<E> {
+import DataStructures.Interfaces.*;
 
+public class XArrayList<E> implements XList<E>{
+	private E[] elements; 
+	private int size; 
+
+	@SuppressWarnings("unchecked")
+	public XArrayList() { 
+		elements = (E[]) new Object[10]; 
+		size = 0; 
+	} 
+	
 	@Override
-	public void add(int i, E e) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		
+	public void add(int index, E e) throws IndexOutOfBoundsException {
+		if(index<0 || index > size){
+			throw new IndexOutOfBoundsException(" add() Invalid index: "+ index);
+		}
+		else{
+			if(size+1 > elements.length/2 + elements.length/4){
+				changeCapacity(elements.length);
+			}
+			if(elements[index]!=null) {
+				shiftToRight(index,size-1);
+			}
+			elements[index]=e;
+			size++;
+		}
 	}
 
 	@Override
 	public void add(E e) {
-		// TODO Auto-generated method stub
-		
+		if(size+1 > elements.length/2 + elements.length/4){
+			changeCapacity(elements.length);
+		}
+		elements[size]=e;
+		size++;
+	}
+	
+	@Override
+	public E remove(int index) throws IndexOutOfBoundsException {
+		if(index<0 || index > elements.length-1){
+			throw new IndexOutOfBoundsException(" remove() Invalid index: "+ index);
+		}
+		else{
+			E element = elements[index];
+			elements[index] = null;
+			shiftToLeft(index,size-1);
+			size--;
+			if(size < elements.length/2 - elements.length/4){
+				changeCapacity(-elements.length/2);
+			}
+			return element;
+		}
 	}
 
 	@Override
-	public E get(int i) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+	public E get(int index) throws IndexOutOfBoundsException {
+		if(index<0 || index > elements.length-1){
+			throw new IndexOutOfBoundsException(" get() Invalid index: "+ index);
+		}
+		else{
+			return elements[index];
+		}
 	}
 
 	@Override
-	public E remove(int i) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public E set(int i, E e) throws IndexOutOfBoundsException {
-		// TODO Auto-generated method stub
-		return null;
+	public E set(int index, E e) throws IndexOutOfBoundsException {
+		if(index<0 || index > elements.length-1){
+			throw new IndexOutOfBoundsException(" set() Invalid index: "+ index);
+		}
+		else{
+			E eTemp = elements[index];
+			elements[index]=e;
+			return eTemp;
+		}
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
+	}	
+	
+	@Override
+	public boolean isEmpty() {
+		return size == 0;
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	private void changeCapacity(int change) { 
+		int newCapacity = elements.length + change; 
+		E[] newElement = (E[]) new Object[newCapacity]; 
+		for (int i=0; i<size; i++) { 
+			newElement[i] = elements[i]; 
+		} 
+		elements = newElement; 
+	}
+
+	private void shiftToRight(int lower, int upper) { 
+		for (int pos = upper; pos >= lower; pos--)
+			elements[pos+1] = elements[pos]; 
+	}
+
+	private void shiftToLeft(int lower, int upper) { 
+		for (int pos = lower; pos <= upper; pos++)
+			elements[pos] = elements[pos+1]; 
 	}
 
 	@Override
-	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getIndexOf(XNode<E> node) throws Exception {
+		E object= node.getElement();
+		for (int i=0; i<size; i++) { 
+			if(object.equals(elements[i])) {
+				return i;
+			}
+		} 
+		return -1;
 	}
+
+	
+
 
 }

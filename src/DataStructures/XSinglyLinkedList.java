@@ -1,56 +1,54 @@
 package DataStructures;
 
-import DataStructures.Interfaces.XLinkedList;
-import DataStructures.Interfaces.XNode;
+import DataStructures.Interfaces.*;
 
-public class XDoublyLinkedList <E> implements XLinkedList<E>{
+public class XSinglyLinkedList <E> implements XLinkedList<E>, XQueue<E>, XStack<E>{
 
-	private XDNode<E> head, tail; 
+	private XSNode<E> head, tail; 
 	private int length; 
 	
-	public XDoublyLinkedList(){
+	public XSinglyLinkedList(){
 		this.length = 0;
-		this.head = new XDNode<E>();
-		this.tail = new XDNode<E>();
+		this.head = new XSNode<E>();
+		this.tail = new XSNode<E>();
 		this.head.setNext(tail);
-		this.tail.setPrev(head);
+		this.tail.setNext(null);
 	}
 
 	@Override
 	public void addFirst(E e) {
-		XDNode<E> tempNode = new XDNode<E>(e, null, this.head);
-		this.head.setPrev(tempNode);
+		XSNode<E> tempNode = new XSNode<E>(e,this.head);
+		this.head.setNext(tempNode);
+		if(length==0) {
+			tail=tempNode;
+		}
 		length++;
 	}
 
 	@Override
 	public void addLast(E e) {
-		if (head == null) {
-			throw new IndexOutOfBoundsException("List is Empty."); 
-		}
-		XDNode<E> tempNode = new XDNode<E>(e, this.tail,null);
+		XSNode<E> tempNode = new XSNode<E>(e, null);
 		this.tail.setNext(tempNode);
+		tail = tempNode;
 		length++;
 	}
-
+	
 	@Override
 	public void add(int i, E e) throws IndexOutOfBoundsException {
 		if(i==0) addFirst(e);
 		else if(i==length-1)addLast(e);
 		else {
-			XDNode<E> oldNode= getNode(i);
-			XDNode<E> tempNode = new XDNode<E>(e, oldNode.getPrev(),oldNode);
-			oldNode.getPrev().setNext(tempNode);
-			oldNode.setPrev(tempNode);
+			XSNode<E> prevNode = getNode(i-1);
+			XSNode<E> tempNode = new XSNode<E>(e, prevNode.getNext());
+			prevNode.setNext(tempNode);
 			length++;
 		}
 	}
 
 	@Override
 	public void add(E e) {
-		addFirst(e);
+		addLast(e);
 	}
-
 
 	@Override
 	public E removeFirst() throws IndexOutOfBoundsException{
@@ -58,18 +56,19 @@ public class XDoublyLinkedList <E> implements XLinkedList<E>{
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
 		E oldElement = this.head.getElement();
-		this.head = this.head.getNext();
-		length--;
+		head = head.getNext();
 		return oldElement;
 	}
 
 	@Override
-	public E removeLast() throws IndexOutOfBoundsException{
+	public E removeLast() throws IndexOutOfBoundsException {
 		if (tail == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
 		E oldElement = this.tail.getElement();
-		this.tail = this.tail.getPrev();
+		XSNode<E> prevNode= getNode(length-2);
+		prevNode.setNext(null);
+		tail= prevNode;
 		length--;
 		return oldElement;
 	}
@@ -79,17 +78,17 @@ public class XDoublyLinkedList <E> implements XLinkedList<E>{
 		if(i==0) return removeFirst();
 		else if(i==length-1) return removeLast();
 		else{
-			XDNode<E> tempNode= getNode(i);
-			tempNode.getPrev().setNext(tempNode.getNext());
-			tempNode.getNext().setPrev(tempNode.getPrev());
+			XSNode<E> prevNode= getNode(i-1);
+			XSNode<E> tempNode = prevNode.getNext();
+			prevNode.setNext(tempNode.getNext());
 			length--;
 			return tempNode.getElement();
 		}
 	}
-	
+
 	@Override
 	public E set(int i, E e) throws IndexOutOfBoundsException {
-		XDNode<E> tempNode = getNode(i);
+		XSNode<E> tempNode = getNode(i);
 		E oldElement = tempNode.getElement();
 		tempNode.setElement(e);
 		return oldElement;
@@ -99,23 +98,7 @@ public class XDoublyLinkedList <E> implements XLinkedList<E>{
 	public E get(int i) throws IndexOutOfBoundsException {
 		return getNode(i).getElement();
 	}
-
-	private XDNode<E> getNode(int i) throws IndexOutOfBoundsException {
-		if (head == null) {
-			throw new IndexOutOfBoundsException("List is Empty."); 
-		}
-		XDNode<E> tempNode= this.head;
-		if(i > this.length || i<0) throw new IndexOutOfBoundsException("Index is out of Bounds");
-		else if(i==0) return head;
-		else if(i==length-1) return tail;
-		else{
-			for(int j=0 ; j<=i ; j++){
-				tempNode = tempNode.getNext();
-			}
-		}
-		return tempNode;
-	}
-
+	
 	@Override
 	public int size() {
 		return this.length;
@@ -133,7 +116,7 @@ public class XDoublyLinkedList <E> implements XLinkedList<E>{
             throw new Exception(" Object provided is null");
         } 
         else {
-            for (XDNode<E> n = head; n != null; n = n.getNext()) {
+            for (XSNode<E> n = head; n != null; n = n.getNext()) {
                 if (node.getElement().equals(n.getElement())) {
                     return index;
                 }
@@ -142,5 +125,53 @@ public class XDoublyLinkedList <E> implements XLinkedList<E>{
         }
         return -1;
 	}
+	
+	//Queue Methods
+
+	@Override
+	public void enqueue(E e) {
+		addLast(e);
+	}
+
+	@Override
+	public E dequeue() throws Exception {
+		return removeFirst();
+	}
+
+	@Override
+	public E peek() throws Exception {
+		return head.getElement();
+	}
+	
+	//Stack Methods
+	
+	@Override
+	public void push(E e) {
+		addFirst(e);
+	}
+
+	@Override
+	public E pop() throws Exception {
+		return removeFirst();
+	}
+	
+	//General Methods
+	
+	private XSNode<E> getNode(int i) throws IndexOutOfBoundsException {
+		if (head == null) {
+			throw new IndexOutOfBoundsException("List is Empty."); 
+		}
+		XSNode<E> tempNode= head;
+		if(i > this.length || i<0) throw new IndexOutOfBoundsException("Index is out of Bounds");
+		else if(i==0) return head;
+		else if(i==length-1) return tail;
+		else{
+			for(int j=0 ; j<=i ; j++){
+				tempNode = tempNode.getNext();
+			}
+		}
+		return tempNode;
+	}
+
 
 }

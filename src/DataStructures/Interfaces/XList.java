@@ -1,4 +1,4 @@
-package DataStructures;
+package DataStructures.Interfaces;
 
 public interface XList<E> {
 	
@@ -9,8 +9,7 @@ public interface XList<E> {
      * @param e the new element to be inserted
      * @throws IndexOutOfBoundsException if i<0 or i>size.
      */
-    public void add(int i, E e)
-    throws IndexOutOfBoundsException;
+    public void add(int i, E e) throws IndexOutOfBoundsException;
     
     /**
      * Adds a new element to the list. Once added, the new element will
@@ -28,6 +27,8 @@ public interface XList<E> {
      * @throws IndexOutOfBoundsException if i<0 or i>size-1
      */
     public E get(int i) throws IndexOutOfBoundsException;
+    
+	public int getIndexOf(XNode<E> node)throws Exception;
 
     /**
      * Removes the element at the position from the list. 

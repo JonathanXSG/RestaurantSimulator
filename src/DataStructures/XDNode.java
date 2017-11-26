@@ -1,5 +1,7 @@
 package DataStructures;
 
+import DataStructures.Interfaces.XNode;
+
 public class XDNode <E> implements XNode<E> {
 	
 	private E element;

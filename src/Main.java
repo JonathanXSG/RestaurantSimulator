@@ -3,14 +3,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
+
+import DataStructures.XArrayList;
 
 public class Main {
 
 	static Scanner readFile;
-	static ArrayList<File> files = new ArrayList<File>();
-	static ArrayList<Customer> customers = new ArrayList<Customer>();
+	static XArrayList<File> files = new XArrayList<File>();
+	static XArrayList<Customer> customers = new XArrayList<Customer>();
+	static XArrayList<ServingMethod> servingMethods = new XArrayList<ServingMethod>();
 	static BufferedReader bReader;
 	
 	public static void main(String[] args) {
@@ -27,19 +29,18 @@ public class Main {
 		try {
 			readCSVFile(files);
 		} catch (NumberFormatException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	private static void readCSVFile(ArrayList<File> files) throws NumberFormatException, IOException {
-		for (File file : files) {
+	private static void readCSVFile(XArrayList<File> files) throws NumberFormatException, IOException {
+		for (int i =0; i<files.size() ; i++) {
+			File file = files.get(i);
 			bReader = new BufferedReader(new FileReader(file));
 
 			String line = "";
 			String[] customerInfo;
 			while((line = bReader.readLine()) != null) {
-
 				customerInfo = line.split(",");
 				int arrival = Integer.valueOf(customerInfo[0]);
 				int uid = Integer.valueOf(customerInfo[1]);

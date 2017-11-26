@@ -1,9 +1,11 @@
 package DataStructures;
 
+import DataStructures.Interfaces.XNode;
+
 public class XSNode <E> implements XNode<E>{
 	
 	private E element;
-	private XNode<E> next;
+	private XSNode<E> next;
 	
 	public XSNode() {
 		this.element = null; 
@@ -15,15 +17,15 @@ public class XSNode <E> implements XNode<E>{
 		this.next = null;
 	}
 	
-	public XSNode(E e,XNode<E> n) { 
+	public XSNode(E e,XSNode<E> n) { 
 		this.element = e; 
 		this.next = n; 
 	}
 	
-	public XNode<E> getNext() {
+	public XSNode<E> getNext() {
 		return next;
 	}
-	public void setNext(XNode<E> next) {
+	public void setNext(XSNode<E> next) {
 		this.next = next;
 	}
 	public E getElement() {
