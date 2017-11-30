@@ -12,7 +12,6 @@ public class Main {
 	static Scanner readFile;
 	static XArrayList<File> files = new XArrayList<File>();
 	static XArrayList<Customer> customers = new XArrayList<Customer>();
-	static XArrayList<ServingMethod> servingMethods = new XArrayList<ServingMethod>();
 	static BufferedReader bReader;
 	
 	public static void main(String[] args) {

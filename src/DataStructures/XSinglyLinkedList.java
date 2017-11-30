@@ -2,7 +2,7 @@ package DataStructures;
 
 import DataStructures.Interfaces.*;
 
-public class XSinglyLinkedList <E> implements XLinkedList<E>, XQueue<E>, XStack<E>{
+public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	private XSNode<E> head, tail; 
 	private int length; 
@@ -125,37 +125,6 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>, XQueue<E>, XStack<
         }
         return -1;
 	}
-	
-	//Queue Methods
-
-	@Override
-	public void enqueue(E e) {
-		addLast(e);
-	}
-
-	@Override
-	public E dequeue() throws Exception {
-		return removeFirst();
-	}
-
-	@Override
-	public E peek() throws Exception {
-		return head.getElement();
-	}
-	
-	//Stack Methods
-	
-	@Override
-	public void push(E e) {
-		addFirst(e);
-	}
-
-	@Override
-	public E pop() throws Exception {
-		return removeFirst();
-	}
-	
-	//General Methods
 	
 	private XSNode<E> getNode(int i) throws IndexOutOfBoundsException {
 		if (head == null) {
