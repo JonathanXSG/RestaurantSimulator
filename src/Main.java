@@ -9,13 +9,12 @@ import java.util.Scanner;
 import DataStructures.XArrayList;
 import Restaurant.Customer;
 
-public class Main {
+public class Main  {
 
 	static Scanner readFile;
 	static XArrayList<File> files = new XArrayList<File>();
 	static XArrayList<Customer> customers = new XArrayList<Customer>();
 	static BufferedReader bReader;
-	ArrayList<E> l;
 	
 	public static void main(String[] args) {
 		try {

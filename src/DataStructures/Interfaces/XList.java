@@ -1,6 +1,6 @@
 package DataStructures.Interfaces;
 
-public interface XList<E> {
+public interface XList<E> extends Iterable<E>{
 	
     /**
      * Adds a new element to the list.

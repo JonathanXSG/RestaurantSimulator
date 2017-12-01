@@ -1,5 +1,7 @@
 package DataStructures;
 
+import java.util.Iterator;
+
 import DataStructures.Interfaces.*;
 
 public class XArrayList<E> implements XList<E>{
@@ -117,6 +119,12 @@ public class XArrayList<E> implements XList<E>{
 			}
 		} 
 		return -1;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

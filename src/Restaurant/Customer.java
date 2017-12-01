@@ -91,6 +91,7 @@ public class Customer {
 		this.value = value;
 	}
 
+
 	/**
 	 * @return the patienceLevel
 	 */
