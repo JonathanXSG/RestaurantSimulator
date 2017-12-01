@@ -3,9 +3,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import DataStructures.XArrayList;
+import Restaurant.Customer;
 
 public class Main {
 
@@ -13,6 +15,7 @@ public class Main {
 	static XArrayList<File> files = new XArrayList<File>();
 	static XArrayList<Customer> customers = new XArrayList<Customer>();
 	static BufferedReader bReader;
+	ArrayList<E> l;
 	
 	public static void main(String[] args) {
 		try {

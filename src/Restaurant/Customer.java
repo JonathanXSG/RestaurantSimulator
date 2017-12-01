@@ -1,3 +1,4 @@
+package Restaurant;
 
 public class Customer {
 
@@ -74,6 +75,20 @@ public class Customer {
 	 */
 	public void setOrderTime(int orderTime) {
 		this.orderTime = orderTime;
+	}
+	
+	/**
+	 * @return the value
+	 */
+	public double getValue() {
+		return value;
+	}
+
+	/**
+	 * @param value the value to set
+	 */
+	public void setValue(double value) {
+		this.value = value;
 	}
 
 	/**

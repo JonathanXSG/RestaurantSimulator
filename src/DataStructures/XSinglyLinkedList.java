@@ -1,6 +1,9 @@
 package DataStructures;
 
+import java.util.Iterator;
+
 import DataStructures.Interfaces.*;
+import Restaurant.Customer;
 
 public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
@@ -140,6 +143,90 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 			}
 		}
 		return tempNode;
+	}
+	
+	private class MatIterator implements Iterator<Customer>{
+		private int count=0;
+		private int turn=1;
+		private XSNode<Customer> pointer =(XSNode<Customer>) head;
+		private XSNode<Customer> highest = pointer;
+		
+		@Override
+		public boolean hasNext() {
+			pointer =(XSNode<Customer>) head;
+			Customer c = pointer.getElement();
+			boolean next = false;
+			
+			if(count<=length) {
+				for(int i = 1; i<length ; i++) {
+					c = pointer.getElement();
+					if(!c.isOrderTaken() && c.getArrivalTurn()<= turn) {
+						if(c.getPatienceLevel() +-c.getArrivalTurn() - turn >=0 ) { //We can serve
+							next = true;
+							highest = pointer;
+						}
+						else {
+							count++;
+							c.setOrderTaken(true);
+						}
+					}
+					pointer = pointer.getNext();
+				}
+			}
+			return next;
+		}
+
+		@Override
+		public Customer next() {
+			count++;
+			highest.getElement().setOrderTaken(true);
+			turn += highest.getElement().getOrderTime();
+			return highest.getElement();
+		}
+		
+	}
+	
+	private class MaxIterator implements Iterator<Customer>{
+		private int count=0;
+		private int turn=0;
+		private XSNode<Customer> pointer =(XSNode<Customer>) head;
+		private XSNode<Customer> highest = pointer;
+		
+		@Override
+		public boolean hasNext() {
+			pointer =(XSNode<Customer>) head;
+			Customer c = pointer.getElement();
+			boolean next = false;
+			
+			if(count<=length) {
+				for(int i = 1; i<length ; i++) {
+					c = pointer.getElement();
+					if(!c.isOrderTaken() && c.getArrivalTurn()<= turn) {
+						if(c.getPatienceLevel() +-c.getArrivalTurn() - turn >=0 ) { //We can serve
+							if(c.getValue() > highest.getElement().getValue()) {
+								next = true;
+								highest = pointer;
+							}
+						}
+						else {
+							count++;
+							c.setOrderTaken(true);
+						}
+					}
+					pointer = pointer.getNext();
+				}
+			}
+			return next;
+		}
+
+		@Override
+		public Customer next() {
+			count++;
+			highest.getElement().setOrderTaken(true);
+			turn += highest.getElement().getOrderTime();
+			return highest.getElement();
+		}
+		
 	}
 
 
