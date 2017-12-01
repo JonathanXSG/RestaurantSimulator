@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import DataStructures.XArrayList;
+import Restaurant.Customer;
 
-public class Main {
+public class Main  {
 
 	static Scanner readFile;
 	static XArrayList<File> files = new XArrayList<File>();

@@ -1,5 +1,7 @@
 package DataStructures;
 
+import java.util.Iterator;
+
 import DataStructures.Interfaces.XLinkedList;
 import DataStructures.Interfaces.XNode;
 
@@ -141,6 +143,12 @@ public class XDoublyLinkedList <E> implements XLinkedList<E>{
             }
         }
         return -1;
+	}
+
+	@Override
+	public Iterator<E> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
