@@ -21,7 +21,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	@Override
 	public void addFirst(E e) {
 		XSNode<E> tempNode = new XSNode<E>(e,this.head);
-		this.head.setNext(tempNode);
+		this.head = tempNode;
 		if(length==0) {
 			tail=tempNode;
 		}
@@ -50,7 +50,12 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	@Override
 	public void add(E e) {
-		addLast(e);
+		if(length==0) {
+			addFirst(e);
+		}
+		else {
+			addLast(e);
+		}
 	}
 
 	@Override
@@ -147,8 +152,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	
 	@Override
 	public Iterator<E> iterator() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Iterator<E>) new MaxIterator();
 	}
 	
 	private class MatIterator implements Iterator<Customer>{
@@ -164,17 +168,20 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 			boolean next = false;
 			
 			if(count<=length) {
-				for(int i = 1; i<length ; i++) {
+				for(int i = 1; i<=length ; i++) {
 					c = pointer.getElement();
-					if(!c.isOrderTaken() && c.getArrivalTurn()<= turn) {
-						if(c.getPatienceLevel() +-c.getArrivalTurn() - turn >=0 ) { //We can serve
-							next = true;
-							highest = pointer;
+					if(!c.isOrderTaken()) {
+						if(c.getArrivalTurn()<= turn) {
+							if((c.getPatienceLevel() + c.getArrivalTurn()) - turn >=0 ) { //We can serve
+								next = true;
+								highest = pointer;
+							}
+							else {
+								count++;
+								c.setOrderTaken(true);
+							}
 						}
-						else {
-							count++;
-							c.setOrderTaken(true);
-						}
+						else break;
 					}
 					pointer = pointer.getNext();
 				}
@@ -194,30 +201,35 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	
 	private class MaxIterator implements Iterator<Customer>{
 		private int count=0;
-		private int turn=0;
+		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
 		
 		@Override
 		public boolean hasNext() {
 			pointer =(XSNode<Customer>) head;
-			Customer c = pointer.getElement();
+			Customer c;
+			double profit =0;
 			boolean next = false;
-			
-			if(count<=length) {
-				for(int i = 1; i<length ; i++) {
+
+			if(count<length) {
+				for(int i = 1; i<=length ; i++) {
 					c = pointer.getElement();
-					if(!c.isOrderTaken() && c.getArrivalTurn()<= turn) {
-						if(c.getPatienceLevel() +-c.getArrivalTurn() - turn >=0 ) { //We can serve
-							if(c.getValue() > highest.getElement().getValue()) {
-								next = true;
-								highest = pointer;
+					if(!c.isOrderTaken()) {
+						if(c.getArrivalTurn()<= turn) {
+							if(c.getPatienceLevel() + c.getArrivalTurn() - turn >=0 ) { //We can serve
+								if(c.getValue() > profit) {
+									profit = c.getValue();
+									next = true;
+									highest = pointer;
+								}
+							}
+							else {
+								count++;
+								c.setOrderTaken(true);
 							}
 						}
-						else {
-							count++;
-							c.setOrderTaken(true);
-						}
+						else break;
 					}
 					pointer = pointer.getNext();
 				}
@@ -310,6 +322,14 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 			return lowest.getElement();
 		}
 
+	}
+	
+	public void resetCustomers() {
+		XSNode<Customer> c = (XSNode<Customer>) head;
+		for(int i=0 ; i< length ; i++) {
+			c.getElement().setOrderTaken(false);
+			c = c.getNext();
+		}
 	}
 
 

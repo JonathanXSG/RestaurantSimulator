@@ -5,7 +5,7 @@ public class Customer {
 	private int arrivalTurn;
 	private int uid;
 	private int orderTime;
-	private double value;
+	private double profit;
 	private int patienceLevel;
 	private boolean orderTaken;
 
@@ -29,7 +29,7 @@ public class Customer {
 	public Customer(int arrivalTurn, int uid, int orderTime, double value, int patienceLevel) {
 		this.arrivalTurn = arrivalTurn;
 		this.uid = uid;
-		this.value = value;
+		this.profit = value;
 		this.orderTime = orderTime;
 		this.patienceLevel = patienceLevel;
 		this.orderTaken = false;
@@ -81,14 +81,14 @@ public class Customer {
 	 * @return the value
 	 */
 	public double getValue() {
-		return value;
+		return profit;
 	}
 
 	/**
 	 * @param value the value to set
 	 */
 	public void setValue(double value) {
-		this.value = value;
+		this.profit = value;
 	}
 
 
@@ -123,7 +123,7 @@ public class Customer {
 	@Override
 	public String toString(){
 		return "Customer    ArrivalTurn:"+this.arrivalTurn+"   Uid: "+this.uid+"   Order time: "+this.orderTime+
-				"   Value: "+this.value+"   Patience: "+this.patienceLevel;
+				"   Value: "+this.profit+"   Patience: "+this.patienceLevel;
 	}
 	
 	
