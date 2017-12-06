@@ -213,7 +213,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 							}
 						}
 						
-						else break;
+//						else break;
 					}
 					pointer = pointer.getNext();
 				}
@@ -265,7 +265,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 								c.setOrderTaken(true);
 							}
 						}
-						else break;
+//						else break;
 					}
 					pointer = pointer.getNext();
 				}
@@ -368,9 +368,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 							}
 						}
 					}
-					else{
-						break;
-					}
+//					else{
+//						break;
+//					}
 					point = point.getNext();
 				}
 			}

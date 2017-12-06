@@ -1,18 +1,16 @@
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Scanner;
 
 import DataStructures.XArrayList;
 import DataStructures.XSinglyLinkedList;
 import Restaurant.Customer;
+import javafx.util.Pair;
 
 public class Main  {
 
@@ -21,11 +19,13 @@ public class Main  {
 	static BufferedReader bReader;
 	static Iterator<Customer> restaurantIterator;
 	static BufferedWriter writer;
+	static int maxCustomers;
+	static double maxProfit;
 
 	public static void main(String[] args) {
 		String line = "";
 		try {
-			bReader = new BufferedReader(new FileReader("input.txt"));
+			bReader = new BufferedReader(new FileReader("input1.txt"));
 			while((line = bReader.readLine()) != null) {
 				files.add(new File(line));
 				System.out.println("Found files: "+files.get(files.size()-1));
@@ -36,13 +36,16 @@ public class Main  {
 
 		try {
 			for (int i =0; i<files.size() ; i++){
+				String f = files.get(i).toString();
 				customers = new XSinglyLinkedList<Customer>();
-				System.out.println("***************************"+files.get(i)+"***************************");
+				System.out.println("***************************"+f+"***************************");
 				readCSVFile(files.get(i));
-				writeOutput(files.get(i).toString(), "Pat", runApproach("Pat"), 0.0, 0);
-				writeOutput(files.get(i).toString(), "Pat", runApproach("Mat"), 0.0, 0);
-				writeOutput(files.get(i).toString(), "Pat", runApproach("Max"), 0.0, 0);
-				writeOutput(files.get(i).toString(), "Pat", runApproach("Pac"), 0.0, 0);
+				writer = new BufferedWriter(new FileWriter(f.substring(0,f.length()-3)+"out"));
+				writeOutput("MaxValues", new Pair<Double, Integer>(maxProfit,maxCustomers));
+				writeOutput("Pat", runApproach("Pat"));
+				writeOutput("Mat", runApproach("Mat"));
+				writeOutput("Max", runApproach("Max"));
+				writeOutput("Pac", runApproach("Pac"));
 				
 				System.out.println("***************************"+files.get(i)+"***************************");
 				writer.flush();
@@ -53,8 +56,9 @@ public class Main  {
 	}
 
 	private static void readCSVFile(File file) throws NumberFormatException, IOException {
-
 		bReader = new BufferedReader(new FileReader(file));
+		maxCustomers=0;
+		maxProfit=0.0;
 		String line = "";
 		String[] customerInfo;
 		while((line = bReader.readLine()) != null) {
@@ -65,13 +69,15 @@ public class Main  {
 			Double value = Double.valueOf(customerInfo[3].substring(1));
 			int patience = Integer.valueOf(customerInfo[4]);
 			customers.add(new Customer(arrival,uid,orderTime,value,patience));
+			maxCustomers++;
+			maxProfit+=value;
 			//System.out.println(customers.get(customers.size()-1).toString());
 		}
-		//System.out.println();
+		System.out.println(maxCustomers + "   "+maxProfit);
 
 	}
 
-	private static double[] runApproach(String s) {
+	private static Pair<Double, Integer> runApproach(String s) {
 		switch (s) {
 		case "Pat":
 			customers.setIterator(s);
@@ -89,10 +95,10 @@ public class Main  {
 			break;
 		}
 		restaurantIterator = customers.iterator();
-		int count = 0;
-		double profit =0.0;
+		Integer count = 0;
+		Double profit =0.0;
 		Customer cust;
-		System.out.println("----- "+s+" -----");
+//		System.out.println("----- "+s+" -----");
 		while(restaurantIterator.hasNext()) {
 			cust = restaurantIterator.next();
 			System.out.println(cust.toString());
@@ -101,24 +107,26 @@ public class Main  {
 		}
 		DecimalFormat df = new DecimalFormat("#.##");
 		System.out.println("Customers served: "+count + "  Profit: " + df.format(profit));
-		System.out.println("----- "+s+" -----");
-		System.out.println();
+//		System.out.println("----- "+s+" -----");
+//		System.out.println();
 		customers.resetCustomers();
-		return new double[]{profit,count};
+		return new Pair<Double, Integer>(profit, count);
 	}
 	
-	public static void writeOutput(String s, String person, double[] d, double maxP, int maxC) throws IOException{
-		 writer = new BufferedWriter(new FileWriter(s.substring(0,s.length()-3)+"txt"));
-		if(s.equals("Pat")){
-			writer.write("Maximum profit possible: $"+maxP);
+	public static void writeOutput(String person, Pair<Double, Integer> values) throws IOException{
+		if(person.equals("MaxValues")){
+			writer.append("Maximum profit possible: $"+ new DecimalFormat("####.##").format(values.getKey()));
 			writer.newLine();
-			writer.write("Maximum number of customers served possible: "+maxC);
+			writer.append("Maximum number of customers served possible: "+values.getValue());
 			writer.newLine();
 		}
-		writer.write(person+"’s approach profit: $"+d[0]);
-		writer.newLine();
-		writer.write(person+"'s approach number of disappointed customers: "+(maxP-d[1]));
-		writer.newLine();
+		else {
+			writer.append(person+"'s approach profit: $"+new DecimalFormat("#.##").format(values.getKey()));
+			writer.newLine();
+			writer.append(person+"'s approach number of disappointed customers: "+ (maxCustomers - values.getValue()));
+			writer.newLine();
+		}
+		
 	}
 
 }
