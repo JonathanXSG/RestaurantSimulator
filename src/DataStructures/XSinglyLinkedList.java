@@ -153,25 +153,31 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	@Override
 	public Iterator<E> iterator() {
-		return (Iterator<E>) new PatIterator();
+		return this.iteratorMethod;
 	}
 	
-//	public void setIterator(String iterator){
-//		switch (iterator){
-//		case "Pat":
-//			this.iteratorMethod = (Iterator<E>) new PatIterator();
-//			break;
-//		case "Mat":
-//			this.iteratorMethod = (Iterator<E>) new MatIterator();
-//			break;
-//		case "Max":
-//			this.iteratorMethod = (Iterator<E>) new MaxIterator();
-//			break;
-//		case "Pac":
-//			this.iteratorMethod = ()
-//		}
-//		
-//	}
+	public void setIterator(String iterator){
+		switch (iterator){
+		
+		case "Pat":
+			this.iteratorMethod = (Iterator<E>) new PatIterator();
+			break;
+		case "Mat":
+			this.iteratorMethod = (Iterator<E>) new MatIterator();
+			break;
+		case "Max":
+			this.iteratorMethod = (Iterator<E>) new MaxIterator();
+			break;
+		case "Pac":
+			this.iteratorMethod = (Iterator<E>) new PacIterator();
+			break;
+			
+		default:
+			break;
+		
+		}
+		
+	}
 
 	private class MatIterator implements Iterator<Customer>{
 		private int count=0;

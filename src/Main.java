@@ -67,16 +67,16 @@ public class Main  {
 	private static void runApproach(String s) {
 		switch (s) {
 		case "Pat":
-			// customers.setIterator(String s);
+			customers.setIterator(s);
 			break;
 		case "Mat":
-			// customers.setIterator(String s);
+			customers.setIterator(s);
 			break;
 		case "Max":
-			// customers.setIterator(String s);
+			customers.setIterator(s);
 			break;
 		case "Pac":
-			// customers.setIterator(String s);
+			customers.setIterator(s);
 			break;
 		default:
 			break;
