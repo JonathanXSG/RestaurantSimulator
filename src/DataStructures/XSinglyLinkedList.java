@@ -9,7 +9,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	private XSNode<E> head, tail; 
 	private int length; 
-	private Iterator<E> iteratorMethod = (Iterator<E>) new PatIterator();
+	private Iterator<E> iteratorMethod;
 
 	public XSinglyLinkedList(){
 		this.length = 0;
@@ -153,6 +153,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	@Override
 	public Iterator<E> iterator() {
+		if(iteratorMethod == null){
+			setIterator("Pat");
+		}
 		return this.iteratorMethod;
 	}
 	
@@ -184,6 +187,10 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
+		
+		private MatIterator(){
+			turn = pointer.getElement().getArrivalTurn();
+		}
 
 		@Override
 		public boolean hasNext() {
@@ -205,6 +212,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 								c.setOrderTaken(true);
 							}
 						}
+						
 						else break;
 					}
 					pointer = pointer.getNext();
@@ -228,6 +236,10 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
+		
+		private MaxIterator(){
+			turn = pointer.getElement().getArrivalTurn();
+		}
 
 		@Override
 		public boolean hasNext() {
@@ -274,8 +286,13 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	private class PatIterator implements Iterator<Customer>{
 		private int counter = 0;
 		private int turn = 1;
+		
 		private XSNode<Customer> point = (XSNode<Customer>) head;
 		private Customer tmp = null;
+		
+		private PatIterator(){
+			turn = point.getElement().getArrivalTurn();
+		}
 
 		@Override
 		public boolean hasNext() {
@@ -314,6 +331,10 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private XSNode<Customer> point = (XSNode<Customer>) head;
 		private Customer lowest = point.getElement();
 		private boolean newLow = false;
+		
+		private PacIterator(){
+			turn = point.getElement().getArrivalTurn();
+		}
 
 		@Override
 		public boolean hasNext() {
