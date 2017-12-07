@@ -159,9 +159,16 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		if(iteratorMethod == null){
 			setIterator("Pat");
 		}
+		
 		return this.iteratorMethod;
 	}
 	
+	/**
+	 * Specifies which Iterator is going to be applied to the list.
+	 * Choose between "Pat", "Mat", "Max" or "Pac".
+	 * Any error or different string will be considered as Default("Pat").
+	 * @param iterator
+	 */
 	public void setIterator(String iterator){
 		switch (iterator){
 		
@@ -180,17 +187,26 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 			
 		default:
 			break;
+			
+			
 		
 		}
 		
 	}
 
 	private class MatIterator implements Iterator<Customer>{
+		
+		/**
+		 * Private instances.
+		 */
 		private int count=0;
 		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
 		
+		/**
+		 * MatIterator iterates through the list and take order form last to first.
+		 */
 		private MatIterator(){
 			turn = pointer.getElement().getArrivalTurn();
 		}
@@ -238,11 +254,17 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	}
 
 	private class MaxIterator implements Iterator<Customer>{
+		/**
+		 * Private Instances.
+		 */
 		private int count=0;
 		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
 		
+		/**
+		 * MaxIterator iterates through the list and find the Customers with most profits and  take its order.
+		 */
 		private MaxIterator(){
 			turn = pointer.getElement().getArrivalTurn();
 		}
@@ -294,12 +316,18 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	}
 
 	private class PatIterator implements Iterator<Customer>{
+		/**
+		 * Private Instances.
+		 */
 		private int counter = 0;
 		private int turn = 1;
 		
 		private XSNode<Customer> point = (XSNode<Customer>) head;
 		private Customer tmp = null;
 		
+		/**
+		 * PatIterator iterates through the list and take order form first to last.
+		 */
 		private PatIterator(){
 			turn = point.getElement().getArrivalTurn();
 		}
@@ -332,6 +360,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	}
 
 	private class PacIterator implements Iterator<Customer>{
+		/**
+		 * Private Instances
+		 */
 		private int counter = 0;
 		private int turn = 1;
 
@@ -339,6 +370,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private Customer lowest = point.getElement();
 		private boolean newLow = false;
 		
+		/**
+		 * PacIterator iterates through the list and find the Customers with shortest order time and  take its order.
+		 */
 		private PacIterator(){
 			turn = point.getElement().getArrivalTurn();
 		}
@@ -395,6 +429,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	}
 
+	/**
+	 * 
+	 */
 	public void resetCustomers() {
 		XSNode<Customer> c = (XSNode<Customer>) head;
 		for(int i=0 ; i< length ; i++) {
