@@ -212,10 +212,13 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 								c.setOrderTaken(true);
 							}
 						}
-						
-//						else break;
+						else if(!next && count<=length) {
+							turn = pointer.getElement().getArrivalTurn();
+							i--;
+							continue;
+						}
 					}
-					pointer = pointer.getNext();
+				pointer = pointer.getNext();
 				}
 			}
 			return next;
@@ -265,7 +268,11 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 								c.setOrderTaken(true);
 							}
 						}
-//						else break;
+						else if(!next && count<=length) {
+							turn = pointer.getElement().getArrivalTurn();
+							i--;
+							continue;
+						}
 					}
 					pointer = pointer.getNext();
 				}
@@ -314,13 +321,10 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 		@Override
 		public Customer next() {
-
-
 			turn = turn + point.getElement().getOrderTime();
 			counter++;
 			point = point.getNext();
 			return tmp;
-
 		}
 	}
 
@@ -338,7 +342,6 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 		@Override
 		public boolean hasNext() {
-			// TODO Auto-generated method stub
 			newLow = false;
 			point = (XSNode<Customer>) head;
 			lowest = null;
@@ -348,7 +351,6 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 				for(int i = 1; i<=length;i++){
 					c = point.getElement();
 					if((c.getArrivalTurn()<=turn)){
-
 						if(!c.isOrderTaken()){
 							if(c.getPatienceLevel()+c.getArrivalTurn()-turn>=0){
 								if(lowest == null){
@@ -368,9 +370,11 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 							}
 						}
 					}
-//					else{
-//						break;
-//					}
+					else if(!newLow && counter<=length) {
+						turn = point.getElement().getArrivalTurn();
+						i--;
+						continue;
+					}
 					point = point.getNext();
 				}
 			}

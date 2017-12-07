@@ -25,7 +25,8 @@ public class Main  {
 	public static void main(String[] args) {
 		String line = "";
 		try {
-			bReader = new BufferedReader(new FileReader("input1.txt"));
+			bReader = new BufferedReader(new FileReader("inout.txt"));
+//			bReader = new BufferedReader(new FileReader("inputX.txt"));
 			while((line = bReader.readLine()) != null) {
 				files.add(new File(line));
 				System.out.println("Found files: "+files.get(files.size()-1));
