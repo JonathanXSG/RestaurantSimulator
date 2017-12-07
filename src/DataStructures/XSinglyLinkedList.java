@@ -19,6 +19,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		this.tail.setNext(null);
 	}
 
+	
 	@Override
 	public void addFirst(E e) {
 		XSNode<E> tempNode = new XSNode<E>(e,this.head);
@@ -29,6 +30,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		length++;
 	}
 
+	
 	@Override
 	public void addLast(E e) {
 		XSNode<E> tempNode = new XSNode<E>(e, null);
@@ -37,6 +39,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		length++;
 	}
 
+	
 	@Override
 	public void add(int i, E e) throws IndexOutOfBoundsException {
 		if(i==0) addFirst(e);
