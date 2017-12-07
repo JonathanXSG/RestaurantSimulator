@@ -1,5 +1,10 @@
 package DataStructures.Interfaces;
 
+/**
+ * @author Jonathan Santiago
+ *
+ * @param <E>
+ */
 public interface XList<E> extends Iterable<E>{
 	
     /**
@@ -27,8 +32,7 @@ public interface XList<E> extends Iterable<E>{
      * @throws IndexOutOfBoundsException if i<0 or i>size-1
      */
     public E get(int i) throws IndexOutOfBoundsException;
-    
-	public int getIndexOf(XNode<E> node)throws Exception;
+
 
     /**
      * Removes the element at the position from the list. 
@@ -58,5 +62,7 @@ public interface XList<E> extends Iterable<E>{
      * @return true if list empty, false if not.
      */
     public boolean isEmpty();
+
+	
 
 }

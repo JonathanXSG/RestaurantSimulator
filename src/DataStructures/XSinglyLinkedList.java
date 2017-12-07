@@ -5,22 +5,82 @@ import java.util.Iterator;
 import DataStructures.Interfaces.*;
 import Restaurant.Customer;
 
-public class XSinglyLinkedList <E> implements XLinkedList<E>{
+public class XSinglyLinkedList <E> implements XList<E>{
+
+	/**
+	 * @author Adahid Galan
+	 *
+	 * @param <E>
+	 */
+	private class XSNode<E>{
+		private E element;
+		private XSNode<E> next;
+
+		/**
+		 * Default constructor.
+		 */
+		public XSNode() {
+			this.element = null; 
+			this.next = null;
+		}
+
+		
+		/**
+		 * Constructor to add new element.
+		 * @param e
+		 */
+		public XSNode(E e) { 
+			this.element = e; 
+			this.next = null;
+		}
+
+		/**
+		 * Constructor to add new element and its next.
+		 * @param e
+		 * @param n
+		 */
+		public XSNode(E e,XSNode<E> n) { 
+			this.element = e; 
+			this.next = n; 
+		}
+		
+		
+		/**
+		 * Get element.
+		 * @return element.
+		 */
+		public E getElement() {
+			return this.element; 
+		}
+	}
+	
+	/**
+	 * Private instances.
+	 */
 
 	private XSNode<E> head, tail; 
 	private int length; 
 	private Iterator<E> iteratorMethod;
+	
+	
 
+	/**
+	 * Default Constructor.
+	 */
 	public XSinglyLinkedList(){
 		this.length = 0;
 		this.head = new XSNode<E>();
 		this.tail = new XSNode<E>();
-		this.head.setNext(tail);
-		this.tail.setNext(null);
+		this.head.next = (tail);
+		this.tail.next = (null);
 	}
 
-	
-	@Override
+
+
+	/**
+	 * Adds a new element at the first position of the list.
+	 * @param e
+	 */
 	public void addFirst(E e) {
 		XSNode<E> tempNode = new XSNode<E>(e,this.head);
 		this.head = tempNode;
@@ -30,24 +90,28 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		length++;
 	}
 
-	
-	@Override
+
+
+	/**
+	 * Adds a new element at the last position of the list.
+	 * @param e
+	 */
 	public void addLast(E e) {
 		XSNode<E> tempNode = new XSNode<E>(e, null);
-		this.tail.setNext(tempNode);
+		this.tail.next = (tempNode);
 		tail = tempNode;
 		length++;
 	}
 
-	
+
 	@Override
 	public void add(int i, E e) throws IndexOutOfBoundsException {
 		if(i==0) addFirst(e);
 		else if(i==length-1)addLast(e);
 		else {
 			XSNode<E> prevNode = getNode(i-1);
-			XSNode<E> tempNode = new XSNode<E>(e, prevNode.getNext());
-			prevNode.setNext(tempNode);
+			XSNode<E> tempNode = new XSNode<E>(e, prevNode.next);
+			prevNode.next = (tempNode);
 			length++;
 		}
 	}
@@ -62,24 +126,34 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		}
 	}
 
-	@Override
+
+	/**
+	 * Removes first element in the list.
+	 * @return removed element.
+	 * @throws IndexOutOfBoundsException if first is null.
+	 */
 	public E removeFirst() throws IndexOutOfBoundsException{
 		if (head == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
 		E oldElement = this.head.getElement();
-		head = head.getNext();
+		head = head.next;
 		return oldElement;
 	}
 
-	@Override
+
+	/**
+	 * Removes last element in the list.
+	 * @return removed element.
+	 * @throws IndexOutOfBoundsException if last is null.
+	 */
 	public E removeLast() throws IndexOutOfBoundsException {
 		if (tail == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
 		E oldElement = this.tail.getElement();
 		XSNode<E> prevNode= getNode(length-2);
-		prevNode.setNext(null);
+		prevNode.next = null;
 		tail= prevNode;
 		length--;
 		return oldElement;
@@ -91,8 +165,8 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		else if(i==length-1) return removeLast();
 		else{
 			XSNode<E> prevNode= getNode(i-1);
-			XSNode<E> tempNode = prevNode.getNext();
-			prevNode.setNext(tempNode.getNext());
+			XSNode<E> tempNode = prevNode.next;
+			prevNode.next = (tempNode.next);
 			length--;
 			return tempNode.getElement();
 		}
@@ -102,7 +176,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	public E set(int i, E e) throws IndexOutOfBoundsException {
 		XSNode<E> tempNode = getNode(i);
 		E oldElement = tempNode.getElement();
-		tempNode.setElement(e);
+		tempNode.element = (e);
 		return oldElement;
 	}
 
@@ -121,23 +195,13 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		return this.length==0;
 	}
 
-	@Override
-	public int getIndexOf(XNode<E> node) throws Exception {
-		int index = 0;
-		if (node.getElement() == null) {
-			throw new Exception(" Object provided is null");
-		} 
-		else {
-			for (XSNode<E> n = head; n != null; n = n.getNext()) {
-				if (node.getElement().equals(n.getElement())) {
-					return index;
-				}
-				index++;
-			}
-		}
-		return -1;
-	}
-
+	
+	/**
+	 * Get Node at specific position
+	 * @param i position
+	 * @return node
+	 * @throws IndexOutOfBoundsException if either list is empty or position is out of bounds.
+	 */
 	private XSNode<E> getNode(int i) throws IndexOutOfBoundsException {
 		if (head == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
@@ -148,7 +212,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		else if(i==length-1) return tail;
 		else{
 			for(int j=0 ; j<=i ; j++){
-				tempNode = tempNode.getNext();
+				tempNode = tempNode.next;
 			}
 		}
 		return tempNode;
@@ -159,10 +223,10 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		if(iteratorMethod == null){
 			setIterator("Pat");
 		}
-		
+
 		return this.iteratorMethod;
 	}
-	
+
 	/**
 	 * Specifies which Iterator is going to be applied to the list.
 	 * Choose between "Pat", "Mat", "Max" or "Pac".
@@ -171,7 +235,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	 */
 	public void setIterator(String iterator){
 		switch (iterator){
-		
+
 		case "Pat":
 			this.iteratorMethod = (Iterator<E>) new PatIterator();
 			break;
@@ -184,18 +248,22 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		case "Pac":
 			this.iteratorMethod = (Iterator<E>) new PacIterator();
 			break;
-			
+
 		default:
 			break;
-			
-			
-		
+
+
+
 		}
-		
+
 	}
 
+	/**
+	 * @author Jonathan Santiago
+	 *
+	 */
 	private class MatIterator implements Iterator<Customer>{
-		
+
 		/**
 		 * Private instances.
 		 */
@@ -203,9 +271,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
-		
+
 		/**
-		 * MatIterator iterates through the list and take order form last to first.
+		 * Default Constructor
 		 */
 		private MatIterator(){
 			turn = pointer.getElement().getArrivalTurn();
@@ -237,7 +305,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 							continue;
 						}
 					}
-				pointer = pointer.getNext();
+					pointer = pointer.next;
 				}
 			}
 			return next;
@@ -253,6 +321,10 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	}
 
+	/**
+	 * @author  Jonathan Santiago
+	 *
+	 */
 	private class MaxIterator implements Iterator<Customer>{
 		/**
 		 * Private Instances.
@@ -261,9 +333,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private int turn=1;
 		private XSNode<Customer> pointer =(XSNode<Customer>) head;
 		private XSNode<Customer> highest = pointer;
-		
+
 		/**
-		 * MaxIterator iterates through the list and find the Customers with most profits and  take its order.
+		 * Default Constructor.
 		 */
 		private MaxIterator(){
 			turn = pointer.getElement().getArrivalTurn();
@@ -299,7 +371,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 							continue;
 						}
 					}
-					pointer = pointer.getNext();
+					pointer = pointer.next;
 				}
 			}
 			return next;
@@ -315,18 +387,22 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 
 	}
 
+	/**
+	 * @author Adahid Galan
+	 *
+	 */
 	private class PatIterator implements Iterator<Customer>{
 		/**
 		 * Private Instances.
 		 */
 		private int counter = 0;
 		private int turn = 1;
-		
+
 		private XSNode<Customer> point = (XSNode<Customer>) head;
 		private Customer tmp = null;
-		
+
 		/**
-		 * PatIterator iterates through the list and take order form first to last.
+		 * Default Constructor.
 		 */
 		private PatIterator(){
 			turn = point.getElement().getArrivalTurn();
@@ -342,7 +418,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 						return true;
 					}
 					else{
-						point = point.getNext();
+						point = point.next;
 						counter++;
 					}
 				}
@@ -354,11 +430,15 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		public Customer next() {
 			turn = turn + point.getElement().getOrderTime();
 			counter++;
-			point = point.getNext();
+			point = point.next;
 			return tmp;
 		}
 	}
 
+	/**
+	 * @author Adahid Galan
+	 *
+	 */
 	private class PacIterator implements Iterator<Customer>{
 		/**
 		 * Private Instances
@@ -369,9 +449,9 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 		private XSNode<Customer> point = (XSNode<Customer>) head;
 		private Customer lowest = point.getElement();
 		private boolean newLow = false;
-		
+
 		/**
-		 * PacIterator iterates through the list and find the Customers with shortest order time and  take its order.
+		 * Default Constructor.
 		 */
 		private PacIterator(){
 			turn = point.getElement().getArrivalTurn();
@@ -412,7 +492,7 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 						i--;
 						continue;
 					}
-					point = point.getNext();
+					point = point.next;
 				}
 			}
 			return newLow;
@@ -430,13 +510,13 @@ public class XSinglyLinkedList <E> implements XLinkedList<E>{
 	}
 
 	/**
-	 * 
+	 * Runs through the list and reset all customers for future implementations.
 	 */
 	public void resetCustomers() {
 		XSNode<Customer> c = (XSNode<Customer>) head;
 		for(int i=0 ; i< length ; i++) {
 			c.getElement().setOrderTaken(false);
-			c = c.getNext();
+			c = c.next;
 		}
 	}
 

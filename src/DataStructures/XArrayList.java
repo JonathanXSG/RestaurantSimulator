@@ -4,6 +4,11 @@ import java.util.Iterator;
 
 import DataStructures.Interfaces.*;
 
+/**
+ * @author Jonathan Santiagp
+ *
+ * @param <E>
+ */
 public class XArrayList<E> implements XList<E>{
 	private E[] elements; 
 	private int size; 
@@ -110,16 +115,7 @@ public class XArrayList<E> implements XList<E>{
 			elements[pos] = elements[pos+1]; 
 	}
 
-	@Override
-	public int getIndexOf(XNode<E> node) throws Exception {
-		E object= node.getElement();
-		for (int i=0; i<size; i++) { 
-			if(object.equals(elements[i])) {
-				return i;
-			}
-		} 
-		return -1;
-	}
+	
 
 	@Override
 	public Iterator<E> iterator() {
