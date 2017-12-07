@@ -6,7 +6,6 @@ import DataStructures.Interfaces.*;
 
 /**
  * @author Jonathan Santiagp
- *
  * @param <E>
  */
 public class XArrayList<E> implements XList<E>{
@@ -105,18 +104,27 @@ public class XArrayList<E> implements XList<E>{
 		elements = newElement; 
 	}
 
+	/**
+	 * Method to shift the elements of the internal array to the right
+	 * @param lower index to start from
+	 * @param upper index that will be moved
+	 */
 	private void shiftToRight(int lower, int upper) { 
 		for (int pos = upper; pos >= lower; pos--)
 			elements[pos+1] = elements[pos]; 
 	}
 
+	/**
+	 * Method to shift the elements of the internal array to the left
+	 * @param lower index to start from
+	 * @param upper index that will be moved
+	 */
 	private void shiftToLeft(int lower, int upper) { 
 		for (int pos = lower; pos <= upper; pos++)
 			elements[pos] = elements[pos+1]; 
 	}
 
 	
-
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub

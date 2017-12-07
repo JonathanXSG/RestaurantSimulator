@@ -1,67 +1,16 @@
 package DataStructures;
 
 import java.util.Iterator;
-
 import DataStructures.Interfaces.*;
 import Restaurant.Customer;
 
-public class XSinglyLinkedList <E> implements XList<E>{
-
-	/**
-	 * @author Adahid Galan
-	 *
-	 * @param <E>
-	 */
-	private class XSNode<E>{
-		private E element;
-		private XSNode<E> next;
-
-		/**
-		 * Default constructor.
-		 */
-		public XSNode() {
-			this.element = null; 
-			this.next = null;
-		}
-
-		
-		/**
-		 * Constructor to add new element.
-		 * @param e
-		 */
-		public XSNode(E e) { 
-			this.element = e; 
-			this.next = null;
-		}
-
-		/**
-		 * Constructor to add new element and its next.
-		 * @param e
-		 * @param n
-		 */
-		public XSNode(E e,XSNode<E> n) { 
-			this.element = e; 
-			this.next = n; 
-		}
-		
-		
-		/**
-		 * Get element.
-		 * @return element.
-		 */
-		public E getElement() {
-			return this.element; 
-		}
-	}
-	
+public class XSinglyLinkedList implements XList<Customer>{
 	/**
 	 * Private instances.
 	 */
-
-	private XSNode<E> head, tail; 
+	private XSNode head, tail; 
 	private int length; 
-	private Iterator<E> iteratorMethod;
-	
+	private Iterator<Customer> iteratorMethod;
 	
 
 	/**
@@ -69,20 +18,18 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	 */
 	public XSinglyLinkedList(){
 		this.length = 0;
-		this.head = new XSNode<E>();
-		this.tail = new XSNode<E>();
+		this.head = new XSNode();
+		this.tail = new XSNode();
 		this.head.next = (tail);
 		this.tail.next = (null);
 	}
-
-
 
 	/**
 	 * Adds a new element at the first position of the list.
 	 * @param e
 	 */
-	public void addFirst(E e) {
-		XSNode<E> tempNode = new XSNode<E>(e,this.head);
+	public void addFirst(Customer e) {
+		XSNode tempNode = new XSNode(e,this.head);
 		this.head = tempNode;
 		if(length==0) {
 			tail=tempNode;
@@ -90,14 +37,12 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		length++;
 	}
 
-
-
 	/**
 	 * Adds a new element at the last position of the list.
 	 * @param e
 	 */
-	public void addLast(E e) {
-		XSNode<E> tempNode = new XSNode<E>(e, null);
+	public void addLast(Customer e) {
+		XSNode tempNode = new XSNode(e, null);
 		this.tail.next = (tempNode);
 		tail = tempNode;
 		length++;
@@ -105,19 +50,19 @@ public class XSinglyLinkedList <E> implements XList<E>{
 
 
 	@Override
-	public void add(int i, E e) throws IndexOutOfBoundsException {
+	public void add(int i, Customer e) throws IndexOutOfBoundsException {
 		if(i==0) addFirst(e);
 		else if(i==length-1)addLast(e);
 		else {
-			XSNode<E> prevNode = getNode(i-1);
-			XSNode<E> tempNode = new XSNode<E>(e, prevNode.next);
+			XSNode prevNode = getNode(i-1);
+			XSNode tempNode = new XSNode(e, prevNode.next);
 			prevNode.next = (tempNode);
 			length++;
 		}
 	}
 
 	@Override
-	public void add(E e) {
+	public void add(Customer e) {
 		if(length==0) {
 			addFirst(e);
 		}
@@ -132,11 +77,11 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	 * @return removed element.
 	 * @throws IndexOutOfBoundsException if first is null.
 	 */
-	public E removeFirst() throws IndexOutOfBoundsException{
+	public Customer removeFirst() throws IndexOutOfBoundsException{
 		if (head == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
-		E oldElement = this.head.getElement();
+		Customer oldElement = this.head.element;
 		head = head.next;
 		return oldElement;
 	}
@@ -147,12 +92,12 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	 * @return removed element.
 	 * @throws IndexOutOfBoundsException if last is null.
 	 */
-	public E removeLast() throws IndexOutOfBoundsException {
+	public Customer removeLast() throws IndexOutOfBoundsException {
 		if (tail == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
-		E oldElement = this.tail.getElement();
-		XSNode<E> prevNode= getNode(length-2);
+		Customer oldElement = this.tail.element;
+		XSNode prevNode= getNode(length-2);
 		prevNode.next = null;
 		tail= prevNode;
 		length--;
@@ -160,29 +105,29 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	}
 
 	@Override
-	public E remove(int i) throws IndexOutOfBoundsException {
+	public Customer remove(int i) throws IndexOutOfBoundsException {
 		if(i==0) return removeFirst();
 		else if(i==length-1) return removeLast();
 		else{
-			XSNode<E> prevNode= getNode(i-1);
-			XSNode<E> tempNode = prevNode.next;
+			XSNode prevNode= getNode(i-1);
+			XSNode tempNode = prevNode.next;
 			prevNode.next = (tempNode.next);
 			length--;
-			return tempNode.getElement();
+			return tempNode.element;
 		}
 	}
 
 	@Override
-	public E set(int i, E e) throws IndexOutOfBoundsException {
-		XSNode<E> tempNode = getNode(i);
-		E oldElement = tempNode.getElement();
+	public Customer set(int i, Customer e) throws IndexOutOfBoundsException {
+		XSNode tempNode = getNode(i);
+		Customer oldElement = tempNode.element;
 		tempNode.element = (e);
 		return oldElement;
 	}
 
 	@Override
-	public E get(int i) throws IndexOutOfBoundsException {
-		return getNode(i).getElement();
+	public Customer get(int i) throws IndexOutOfBoundsException {
+		return getNode(i).element;
 	}
 
 	@Override
@@ -202,11 +147,11 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	 * @return node
 	 * @throws IndexOutOfBoundsException if either list is empty or position is out of bounds.
 	 */
-	private XSNode<E> getNode(int i) throws IndexOutOfBoundsException {
+	private XSNode getNode(int i) throws IndexOutOfBoundsException {
 		if (head == null) {
 			throw new IndexOutOfBoundsException("List is Empty."); 
 		}
-		XSNode<E> tempNode= head;
+		XSNode tempNode= head;
 		if(i > this.length || i<0) throw new IndexOutOfBoundsException("Index is out of Bounds");
 		else if(i==0) return head;
 		else if(i==length-1) return tail;
@@ -219,11 +164,10 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	}
 
 	@Override
-	public Iterator<E> iterator() {
+	public Iterator<Customer> iterator() {
 		if(iteratorMethod == null){
 			setIterator("Pat");
 		}
-
 		return this.iteratorMethod;
 	}
 
@@ -235,25 +179,20 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	 */
 	public void setIterator(String iterator){
 		switch (iterator){
-
 		case "Pat":
-			this.iteratorMethod = (Iterator<E>) new PatIterator();
+			this.iteratorMethod = new PatIterator();
 			break;
 		case "Mat":
-			this.iteratorMethod = (Iterator<E>) new MatIterator();
+			this.iteratorMethod = new MatIterator();
 			break;
 		case "Max":
-			this.iteratorMethod = (Iterator<E>) new MaxIterator();
+			this.iteratorMethod = new MaxIterator();
 			break;
 		case "Pac":
-			this.iteratorMethod = (Iterator<E>) new PacIterator();
+			this.iteratorMethod = new PacIterator();
 			break;
-
 		default:
 			break;
-
-
-
 		}
 
 	}
@@ -269,25 +208,25 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		 */
 		private int count=0;
 		private int turn=1;
-		private XSNode<Customer> pointer =(XSNode<Customer>) head;
-		private XSNode<Customer> highest = pointer;
+		private XSNode pointer = head;
+		private XSNode highest = pointer;
 
 		/**
 		 * Default Constructor
 		 */
 		private MatIterator(){
-			turn = pointer.getElement().getArrivalTurn();
+			turn = pointer.element.getArrivalTurn();
 		}
 
 		@Override
 		public boolean hasNext() {
-			pointer =(XSNode<Customer>) head;
-			Customer c = pointer.getElement();
+			pointer = head;
+			Customer c = pointer.element;
 			boolean next = false;
 
 			if(count<=length) {
 				for(int i = 1; i<=length ; i++) {
-					c = pointer.getElement();
+					c = pointer.element;
 					if(!c.isOrderTaken()) {
 						if(c.getArrivalTurn()<= turn) {
 							if((c.getPatienceLevel() + c.getArrivalTurn()) - turn >=0 ) { //We can serve
@@ -300,7 +239,7 @@ public class XSinglyLinkedList <E> implements XList<E>{
 							}
 						}
 						else if(!next && count<=length) {
-							turn = pointer.getElement().getArrivalTurn();
+							turn = pointer.element.getArrivalTurn();
 							i--;
 							continue;
 						}
@@ -314,9 +253,9 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		@Override
 		public Customer next() {
 			count++;
-			highest.getElement().setOrderTaken(true);
-			turn += highest.getElement().getOrderTime();
-			return highest.getElement();
+			highest.element.setOrderTaken(true);
+			turn += highest.element.getOrderTime();
+			return highest.element;
 		}
 
 	}
@@ -331,26 +270,26 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		 */
 		private int count=0;
 		private int turn=1;
-		private XSNode<Customer> pointer =(XSNode<Customer>) head;
-		private XSNode<Customer> highest = pointer;
+		private XSNode pointer = head;
+		private XSNode highest = pointer;
 
 		/**
 		 * Default Constructor.
 		 */
 		private MaxIterator(){
-			turn = pointer.getElement().getArrivalTurn();
+			turn = pointer.element.getArrivalTurn();
 		}
 
 		@Override
 		public boolean hasNext() {
-			pointer =(XSNode<Customer>) head;
+			pointer = head;
 			Customer c;
 			double profit =0;
 			boolean next = false;
 
 			if(count<length) {
 				for(int i = 1; i<=length ; i++) {
-					c = pointer.getElement();
+					c = pointer.element;
 					if(!c.isOrderTaken()) {
 						if(c.getArrivalTurn()<= turn) {
 							if(c.getPatienceLevel() + c.getArrivalTurn() - turn >=0 ) { //We can serve
@@ -366,7 +305,7 @@ public class XSinglyLinkedList <E> implements XList<E>{
 							}
 						}
 						else if(!next && count<=length) {
-							turn = pointer.getElement().getArrivalTurn();
+							turn = pointer.element.getArrivalTurn();
 							i--;
 							continue;
 						}
@@ -380,9 +319,9 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		@Override
 		public Customer next() {
 			count++;
-			highest.getElement().setOrderTaken(true);
-			turn += highest.getElement().getOrderTime();
-			return highest.getElement();
+			highest.element.setOrderTaken(true);
+			turn += highest.element.getOrderTime();
+			return highest.element;
 		}
 
 	}
@@ -398,21 +337,21 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		private int counter = 0;
 		private int turn = 1;
 
-		private XSNode<Customer> point = (XSNode<Customer>) head;
+		private XSNode point = head;
 		private Customer tmp = null;
 
 		/**
 		 * Default Constructor.
 		 */
 		private PatIterator(){
-			turn = point.getElement().getArrivalTurn();
+			turn = point.element.getArrivalTurn();
 		}
 
 		@Override
 		public boolean hasNext() {
 			if(counter <= length){
 				for(int i = counter; i<length;i++){
-					Customer c = point.getElement();
+					Customer c = point.element;
 					if(c.getPatienceLevel()+c.getArrivalTurn()-turn>=0){
 						this.tmp = c;
 						return true;
@@ -428,7 +367,7 @@ public class XSinglyLinkedList <E> implements XList<E>{
 
 		@Override
 		public Customer next() {
-			turn = turn + point.getElement().getOrderTime();
+			turn = turn + point.element.getOrderTime();
 			counter++;
 			point = point.next;
 			return tmp;
@@ -446,27 +385,27 @@ public class XSinglyLinkedList <E> implements XList<E>{
 		private int counter = 0;
 		private int turn = 1;
 
-		private XSNode<Customer> point = (XSNode<Customer>) head;
-		private Customer lowest = point.getElement();
+		private XSNode point = head;
+		private Customer lowest = point.element;
 		private boolean newLow = false;
 
 		/**
 		 * Default Constructor.
 		 */
 		private PacIterator(){
-			turn = point.getElement().getArrivalTurn();
+			turn = point.element.getArrivalTurn();
 		}
 
 		@Override
 		public boolean hasNext() {
 			newLow = false;
-			point = (XSNode<Customer>) head;
+			point = head;
 			lowest = null;
-			Customer c = point.getElement();
+			Customer c = point.element;
 
 			if(counter<=length){
 				for(int i = 1; i<=length;i++){
-					c = point.getElement();
+					c = point.element;
 					if((c.getArrivalTurn()<=turn)){
 						if(!c.isOrderTaken()){
 							if(c.getPatienceLevel()+c.getArrivalTurn()-turn>=0){
@@ -488,7 +427,7 @@ public class XSinglyLinkedList <E> implements XList<E>{
 						}
 					}
 					else if(!newLow && counter<=length) {
-						turn = point.getElement().getArrivalTurn();
+						turn = point.element.getArrivalTurn();
 						i--;
 						continue;
 					}
@@ -513,11 +452,48 @@ public class XSinglyLinkedList <E> implements XList<E>{
 	 * Runs through the list and reset all customers for future implementations.
 	 */
 	public void resetCustomers() {
-		XSNode<Customer> c = (XSNode<Customer>) head;
+		XSNode c = head;
 		for(int i=0 ; i< length ; i++) {
-			c.getElement().setOrderTaken(false);
+			c.element.setOrderTaken(false);
 			c = c.next;
 		}
+	}
+	
+	/**
+	 * @author Adahid Galan
+	 * @param <E>
+	 */
+	private class XSNode{
+		private Customer element;
+		private XSNode next;
+
+		/**
+		 * Default constructor.
+		 */
+		public XSNode() {
+			this.element = null; 
+			this.next = null;
+		}
+
+		/**
+		 * Constructor to add new element.
+		 * @param e
+		 */
+		public XSNode(Customer e) { 
+			this.element = e; 
+			this.next = null;
+		}
+
+		/**
+		 * Constructor to add new element and its next.
+		 * @param e
+		 * @param n
+		 */
+		public XSNode(Customer e,XSNode n) { 
+			this.element = e; 
+			this.next = n; 
+		}
+		
 	}
 
 

@@ -2,43 +2,29 @@ package DataStructures.Interfaces;
 
 /**
  * @author Jonathan Santiago
- *
  * @param <E>
  */
 public interface XList<E> extends Iterable<E>{
 	
     /**
-     * Adds a new element to the list.
-     * @param i index of the position where the new element is
-     *       to be placed.
-     * @param e the new element to be inserted
-     * @throws IndexOutOfBoundsException if i<0 or i>size.
-     */
-    public void add(int i, E e) throws IndexOutOfBoundsException;
-    
-    /**
-     * Adds a new element to the list. Once added, the new element will
-     * be the last element of the list. Other elements in the list 
-     * remain in the same positions as they are before the operation
-     * is applied. 
-     * @param e reference to the new element to add to the list. 
+     * Adds a new element to the end of the list.
+     * @param e The new element. 
      */
     public void add(E e); 
-
+    
     /**
-     * Returns the element in  the list.
-     * @param i the index of the position of the element to be returned
-     * @return the reference to the element.
-     * @throws IndexOutOfBoundsException if i<0 or i>size-1
+     * Adds a new element to the list.
+     * @param i index of the position for the new element
+     * @param e the new element 
+     * @throws IndexOutOfBoundsException if i is 0 or bigger than size.
      */
-    public E get(int i) throws IndexOutOfBoundsException;
-
+    public void add(int i, E e) throws IndexOutOfBoundsException;
 
     /**
-     * Removes the element at the position from the list. 
-     * @param i the index  in the list to be  deleted.
-     * @return the reference to the element that was removed.
-     * @throws IndexOutOfBoundsException if i<0 or i>size-1
+     * Removes the element at the position. 
+     * @param i the index to be deleted.
+     * @return the element that was removed.
+     * @throws IndexOutOfBoundsException if i smaller than 0 or bigger than size-1
      */
     public E remove(int i) throws IndexOutOfBoundsException;
 
@@ -46,19 +32,27 @@ public interface XList<E> extends Iterable<E>{
      * Replaces the element with the one being provided.
      * @param i the index in the list to be replaced.
      * @param e the new element.
-     * @return reference to the value replaced.
-     * @throws IndexOutOfBoundsException if i<0 or i>size-1
+     * @return the value replaced.
+     * @throws IndexOutOfBoundsException if i is smaller than 0 or bigger than size-1
      */
     public E set(int i, E e) throws IndexOutOfBoundsException;
     
     /**
-     * Returns the number of elements in the list.
-     * @return the number of elements currently in the list.
+     * Returns the element in the list.
+     * @param i the index of the position of the element.
+     * @return the element.
+     * @throws IndexOutOfBoundsException if i smaller than 0 or bigger than size-1
+     */
+    public E get(int i) throws IndexOutOfBoundsException;
+    
+    /**
+     * Returns the amount of elements in list.
+     * @return number of elements in the list.
      */
     public int size();
 
     /**
-     * Determines of the list is empty.
+     * Determines if the list is empty.
      * @return true if list empty, false if not.
      */
     public boolean isEmpty();
