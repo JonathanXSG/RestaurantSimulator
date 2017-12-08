@@ -6,8 +6,7 @@ import DataStructures.Interfaces.*;
 import Restaurant.Customer;
 
 /**
- * @author Jonathan Santiagp
- * @param <E>
+ * @author Jonathan , Adahid
  */
 public class XArrayList<E> implements XList<E>{
 	private E[] elements; 
@@ -134,7 +133,6 @@ public class XArrayList<E> implements XList<E>{
 	
 	/**
 	 * @author Adahid Galan
-	 *
 	 * @param <E>
 	 */
 	private class ArrayIterator<E> implements Iterator<E>{

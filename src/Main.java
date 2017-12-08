@@ -6,12 +6,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Iterator;
-
 import DataStructures.XArrayList;
 import DataStructures.XSinglyLinkedList;
 import Restaurant.Customer;
 import javafx.util.Pair;
 
+/**
+ * @author Jonathan , Adahid
+ */
 public class Main  {
 
 	static XArrayList<File> files = new XArrayList<File>();
@@ -25,7 +27,7 @@ public class Main  {
 	public static void main(String[] args) {
 		String line = "";
 		try {
-			bReader = new BufferedReader(new FileReader("inout.txt"));
+			bReader = new BufferedReader(new FileReader("input.txt"));
 
 			//Read all the csv files from the input.txt
 			while((line = bReader.readLine()) != null) {
@@ -33,7 +35,7 @@ public class Main  {
 				System.out.println("Found files: "+files.get(files.size()-1));
 			}
 
-			/**terates through the files found, reads them to save the customers to a SLL,
+			/**Iterates through the files found, reads them to save the customers to a SLL,
 			 * it runs the four methods of serving and outputs the results.
 			 */
 			for (File e: files){
@@ -57,6 +59,7 @@ public class Main  {
 	}
 
 	/**
+	 * @Author Jonathan
 	 * Reads the csv files and saves the Customers information to a SLL
 	 * @param file
 	 * @throws NumberFormatException
@@ -85,6 +88,7 @@ public class Main  {
 	}
 
 	/**
+	 * @Author Adahid
 	 * Runs one of the approaches for serving the customers and returns the result of max profit
 	 * and number of customers served.
 	 * @param s  The string that specifies the serving approach to use
@@ -133,6 +137,7 @@ public class Main  {
 	}
 
 	/**
+	 * @Author Adahid
 	 * Uses the parameters provided to write to the output files the results
 	 * @param person The string that specifies the serving approach of the values
 	 * @param values Pair of values that represent the max profit and number of customers served.

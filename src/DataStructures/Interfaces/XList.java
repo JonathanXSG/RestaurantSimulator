@@ -1,7 +1,7 @@
 package DataStructures.Interfaces;
 
 /**
- * @author Jonathan Santiago
+ * @author Jonathan , Adahid
  * @param <E>
  */
 public interface XList<E> extends Iterable<E>{
@@ -14,7 +14,7 @@ public interface XList<E> extends Iterable<E>{
     
     /**
      * Adds a new element to the list.
-     * @param i index of the position for the new element
+     * @param i index for the new element
      * @param e the new element 
      * @throws IndexOutOfBoundsException if i is 0 or bigger than size.
      */

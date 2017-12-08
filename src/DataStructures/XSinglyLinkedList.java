@@ -4,6 +4,9 @@ import java.util.Iterator;
 import DataStructures.Interfaces.*;
 import Restaurant.Customer;
 
+/**
+ * @author Jonathan , Adahid
+ */
 public class XSinglyLinkedList implements XList<Customer>{
 	/**
 	 * Private instances.
@@ -142,6 +145,7 @@ public class XSinglyLinkedList implements XList<Customer>{
 
 	
 	/**
+	 * @Author Jonathan
 	 * Get Node at specific position
 	 * @param i position
 	 * @return node
@@ -172,6 +176,7 @@ public class XSinglyLinkedList implements XList<Customer>{
 	}
 
 	/**
+	 * @Author Adahid
 	 * Specifies which Iterator is going to be applied to the list.
 	 * Choose between "Pat", "Mat", "Max" or "Pac".
 	 * Any error or different string will be considered as Default("Pat").
@@ -198,11 +203,9 @@ public class XSinglyLinkedList implements XList<Customer>{
 	}
 
 	/**
-	 * @author Jonathan Santiago
-	 *
+	 * @author Jonathan
 	 */
 	private class MatIterator implements Iterator<Customer>{
-
 		/**
 		 * Private instances.
 		 */
@@ -238,11 +241,14 @@ public class XSinglyLinkedList implements XList<Customer>{
 								c.setOrderTaken(true);
 							}
 						}
+						// If we haven't found a customer to serve and the current customer has a turn above the current
+						// we set the turn to it's turn of arrival and rerun this customer.
 						else if(!next && count<=length) {
 							turn = pointer.element.getArrivalTurn();
 							i--;
 							continue;
 						}
+						else break;
 					}
 					pointer = pointer.next;
 				}
@@ -261,7 +267,7 @@ public class XSinglyLinkedList implements XList<Customer>{
 	}
 
 	/**
-	 * @author  Jonathan Santiago
+	 * @author  Jonathan
 	 *
 	 */
 	private class MaxIterator implements Iterator<Customer>{
@@ -304,11 +310,14 @@ public class XSinglyLinkedList implements XList<Customer>{
 								c.setOrderTaken(true);
 							}
 						}
+						// If we haven't found a customer to serve and the current customer has a turn above the current
+						// we set the turn to it's turn of arrival and rerun this customer.
 						else if(!next && count<=length) {
 							turn = pointer.element.getArrivalTurn();
 							i--;
 							continue;
 						}
+						else break;
 					}
 					pointer = pointer.next;
 				}
@@ -406,8 +415,9 @@ public class XSinglyLinkedList implements XList<Customer>{
 			if(counter<=length){
 				for(int i = 1; i<=length;i++){
 					c = point.element;
-					if((c.getArrivalTurn()<=turn)){
-						if(!c.isOrderTaken()){
+					if(!c.isOrderTaken()){
+						if((c.getArrivalTurn()<=turn)){
+						
 							if(c.getPatienceLevel()+c.getArrivalTurn()-turn>=0){
 								if(lowest == null){
 									lowest = c;
@@ -425,11 +435,14 @@ public class XSinglyLinkedList implements XList<Customer>{
 								c.setOrderTaken(true);
 							}
 						}
-					}
-					else if(!newLow && counter<=length) {
-						turn = point.element.getArrivalTurn();
-						i--;
-						continue;
+						// If we haven't found a customer to serve and the current customer has a turn above the current
+						// we set the turn to it's turn of arrival and rerun this customer.
+						else if(!newLow && counter<=length) {
+							turn = point.element.getArrivalTurn();
+							i--;
+							continue;
+						}
+						else break;
 					}
 					point = point.next;
 				}
@@ -449,6 +462,7 @@ public class XSinglyLinkedList implements XList<Customer>{
 	}
 
 	/**
+	 * @Author Jonathan
 	 * Runs through the list and reset all customers for future implementations.
 	 */
 	public void resetCustomers() {

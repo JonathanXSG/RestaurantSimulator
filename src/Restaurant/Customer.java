@@ -1,7 +1,7 @@
 package Restaurant;
 
 /**
- * @author Jonathan 
+ * @author Jonathan , Adahid
  */
 public class Customer {
 
