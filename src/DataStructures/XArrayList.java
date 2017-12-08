@@ -3,6 +3,7 @@ package DataStructures;
 import java.util.Iterator;
 
 import DataStructures.Interfaces.*;
+import Restaurant.Customer;
 
 /**
  * @author Jonathan Santiagp
@@ -128,7 +129,32 @@ public class XArrayList<E> implements XList<E>{
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayIterator();
+	}
+	
+	/**
+	 * @author Adahid Galan
+	 *
+	 * @param <E>
+	 */
+	private class ArrayIterator<E> implements Iterator<E>{
+		
+		private int counter = 1;
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return (elements[counter-1] != null);
+		}
+
+		@Override
+		public E next() {
+			// TODO Auto-generated method stub
+			E tmp = (E) elements[counter-1];
+			counter++;
+			return tmp;
+		}
+		
 	}
 
 	

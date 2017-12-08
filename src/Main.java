@@ -26,27 +26,28 @@ public class Main  {
 		String line = "";
 		try {
 			bReader = new BufferedReader(new FileReader("inout.txt"));
-			
+
 			//Read all the csv files from the input.txt
 			while((line = bReader.readLine()) != null) {
 				files.add(new File(line));
 				System.out.println("Found files: "+files.get(files.size()-1));
 			}
-			
-			//Iterates through the files found, reads them to save the customers to a SLL,
-			//it runs the four methods of serving and outputs the results.
-			for (int i =0; i<files.size() ; i++){
-				String f = files.get(i).toString();
+
+			/**terates through the files found, reads them to save the customers to a SLL,
+			 * it runs the four methods of serving and outputs the results.
+			 */
+			for (File e: files){
+				String f = e.toString();
 				customers = new XSinglyLinkedList();
 				System.out.println("***************************"+f+"***************************");
-				readCSVFile(files.get(i));
+				readCSVFile(e);
 				writer = new BufferedWriter(new FileWriter(f.substring(0,f.length()-3)+"out"));
 				writeOutput("MaxValues", new Pair<Double, Integer>(maxProfit,maxCustomers));
 				writeOutput("Pat", runApproach("Pat"));
 				writeOutput("Mat", runApproach("Mat"));
 				writeOutput("Max", runApproach("Max"));
 				writeOutput("Pac", runApproach("Pac"));
-				System.out.println("***************************"+files.get(i)+"***************************");
+				System.out.println("***************************"+e+"***************************");
 				writer.flush();
 			}
 			writer.close();
@@ -84,7 +85,7 @@ public class Main  {
 	}
 
 	/**
-	 * Runs one of the approachesfor serving the customers and returns the result of max profit
+	 * Runs one of the approaches for serving the customers and returns the result of max profit
 	 * and number of customers served.
 	 * @param s  The string that specifies the serving approach to use
 	 * @return  Pair of values that represent the max profit and number of customers served.
@@ -106,25 +107,31 @@ public class Main  {
 		default:
 			return null;
 		}
+
 		restaurantIterator = customers.iterator();
 		Integer count = 0;
 		Double profit =0.0;
-		Customer cust;
-//		System.out.println("----- "+s+" -----");
-		while(restaurantIterator.hasNext()) {
-			cust = restaurantIterator.next();
-			System.out.println(cust.toString());
+		//		System.out.println("----- "+s+" -----");
+		//		while(restaurantIterator.hasNext()) {
+		//			cust = restaurantIterator.next();
+		//			System.out.println(cust.toString());
+		//			count++;
+		//			profit =Double.sum(profit, cust.getValue());
+		//		}
+
+		for(Customer c: customers){
+			System.out.println(c.toString());
 			count++;
-			profit =Double.sum(profit, cust.getValue());
+			profit =Double.sum(profit, c.getValue());
 		}
 		DecimalFormat df = new DecimalFormat("#.00");
 		System.out.println("Customers served: "+count + "  Profit: " + df.format(profit));
-//		System.out.println("----- "+s+" -----");
-//		System.out.println();
+		//		System.out.println("----- "+s+" -----");
+		//		System.out.println();
 		customers.resetCustomers();
 		return new Pair<Double, Integer>(profit, count);
 	}
-	
+
 	/**
 	 * Uses the parameters provided to write to the output files the results
 	 * @param person The string that specifies the serving approach of the values
@@ -144,7 +151,7 @@ public class Main  {
 			writer.append(person+"'s approach number of disappointed customers: "+ (maxCustomers - values.getValue()));
 			writer.newLine();
 		}
-		
+
 	}
 
 }
