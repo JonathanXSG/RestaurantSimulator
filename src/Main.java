@@ -27,7 +27,12 @@ public class Main  {
 	public static void main(String[] args) {
 		String line = "";
 		try {
-			bReader = new BufferedReader(new FileReader("input.txt"));
+			if(args[0] != null){
+				bReader = new BufferedReader(new FileReader(args[0]));
+			}
+			else{
+				bReader = new BufferedReader(new FileReader("input.txt"));
+			}
 
 			//Read all the csv files from the input.txt
 			while((line = bReader.readLine()) != null) {
