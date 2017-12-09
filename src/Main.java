@@ -12,7 +12,7 @@ import Restaurant.Customer;
 import javafx.util.Pair;
 
 /**
- * @author Jonathan , Adahid
+ * @author Jonathan S, Adahid G
  */
 public class Main  {
 
