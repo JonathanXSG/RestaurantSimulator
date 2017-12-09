@@ -499,15 +499,6 @@ public class XSinglyLinkedList implements XList<Customer>{
 		}
 
 		/**
-		 * Constructor to add new element.
-		 * @param e
-		 */
-		public XSNode(Customer e) { 
-			this.element = e; 
-			this.next = null;
-		}
-
-		/**
 		 * Constructor to add new element and its next.
 		 * @param e
 		 * @param n

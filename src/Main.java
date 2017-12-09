@@ -115,7 +115,6 @@ public class Main  {
 			count++;
 			profit =Double.sum(profit, c.getValue());
 		}
-		DecimalFormat df = new DecimalFormat("#.00");
 		customers.resetCustomers();
 		return new Pair<Double, Integer>(profit, count);
 	}

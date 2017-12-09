@@ -3,7 +3,7 @@ package DataStructures;
 import java.util.Iterator;
 
 import DataStructures.Interfaces.*;
-import Restaurant.Customer;
+
 
 /**
  * @author Jonathan , Adahid
@@ -135,7 +135,7 @@ public class XArrayList<E> implements XList<E>{
 	 * @author Adahid Galan
 	 * @param <E>
 	 */
-	private class ArrayIterator<E> implements Iterator<E>{
+	private class ArrayIterator implements Iterator<E>{
 		
 		private int counter = 1;
 
