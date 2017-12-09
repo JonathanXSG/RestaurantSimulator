@@ -361,14 +361,23 @@ public class XSinglyLinkedList implements XList<Customer>{
 			if(counter <= length){
 				for(int i = counter; i<length;i++){
 					Customer c = point.element;
-					if(c.getPatienceLevel()+c.getArrivalTurn()-turn>=0){
-						this.tmp = c;
-						return true;
+					if(c.getArrivalTurn()<= turn) {
+						if(c.getPatienceLevel()+c.getArrivalTurn()-turn>=0){
+							this.tmp = c;
+							return true;
+						}
+						else{
+							counter++;
+						}
 					}
-					else{
-						point = point.next;
-						counter++;
+					// If we haven't found a customer to serve and the current customer has a turn above the current
+					// we set the turn to it's turn of arrival and rerun this customer.
+					else {
+						turn = point.element.getArrivalTurn();
+						i--;
+						continue;
 					}
+					point = point.next;
 				}
 			}
 			return false;

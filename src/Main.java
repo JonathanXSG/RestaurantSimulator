@@ -32,7 +32,6 @@ public class Main  {
 			//Read all the csv files from the input.txt
 			while((line = bReader.readLine()) != null) {
 				files.add(new File(line));
-				System.out.println("Found files: "+files.get(files.size()-1));
 			}
 
 			/**Iterates through the files found, reads them to save the customers to a SLL,
@@ -41,7 +40,6 @@ public class Main  {
 			for (File e: files){
 				String f = e.toString();
 				customers = new XSinglyLinkedList();
-				System.out.println("***************************"+f+"***************************");
 				readCSVFile(e);
 				writer = new BufferedWriter(new FileWriter(f.substring(0,f.length()-3)+"out"));
 				writeOutput("MaxValues", new Pair<Double, Integer>(maxProfit,maxCustomers));
@@ -49,12 +47,12 @@ public class Main  {
 				writeOutput("Mat", runApproach("Mat"));
 				writeOutput("Max", runApproach("Max"));
 				writeOutput("Pac", runApproach("Pac"));
-				System.out.println("***************************"+e+"***************************");
 				writer.flush();
 			}
 			writer.close();
 		} catch (NumberFormatException | IOException e) {
 			System.out.println(e);
+			e.printStackTrace();
 		}
 	}
 
@@ -81,10 +79,7 @@ public class Main  {
 			customers.add(new Customer(arrival,uid,orderTime,value,patience));
 			maxCustomers++;
 			maxProfit+=value;
-			//System.out.println(customers.get(customers.size()-1).toString());
 		}
-		System.out.println(maxCustomers + "   "+maxProfit);
-
 	}
 
 	/**
@@ -115,23 +110,12 @@ public class Main  {
 		restaurantIterator = customers.iterator();
 		Integer count = 0;
 		Double profit =0.0;
-		//		System.out.println("----- "+s+" -----");
-		//		while(restaurantIterator.hasNext()) {
-		//			cust = restaurantIterator.next();
-		//			System.out.println(cust.toString());
-		//			count++;
-		//			profit =Double.sum(profit, cust.getValue());
-		//		}
 
 		for(Customer c: customers){
-			System.out.println(c.toString());
 			count++;
 			profit =Double.sum(profit, c.getValue());
 		}
 		DecimalFormat df = new DecimalFormat("#.00");
-		System.out.println("Customers served: "+count + "  Profit: " + df.format(profit));
-		//		System.out.println("----- "+s+" -----");
-		//		System.out.println();
 		customers.resetCustomers();
 		return new Pair<Double, Integer>(profit, count);
 	}
@@ -145,16 +129,15 @@ public class Main  {
 	 */
 	public static void writeOutput(String person, Pair<Double, Integer> values) throws IOException{
 		if(person.equals("MaxValues")){
-			writer.append("Maximum profit possible: $"+ new DecimalFormat("####.##").format(values.getKey()));
+			writer.append("Maximum profit possible: $"+ new DecimalFormat("#.00").format(values.getKey()));
 			writer.newLine();
 			writer.append("Maximum number of customers served possible: "+values.getValue());
-			writer.newLine();
 		}
 		else {
-			writer.append(person+"'s approach profit: $"+new DecimalFormat("#.##").format(values.getKey()));
+			writer.newLine();
+			writer.append(person+"'s approach profit: $"+new DecimalFormat("#.00").format(values.getKey()));
 			writer.newLine();
 			writer.append(person+"'s approach number of disappointed customers: "+ (maxCustomers - values.getValue()));
-			writer.newLine();
 		}
 
 	}
