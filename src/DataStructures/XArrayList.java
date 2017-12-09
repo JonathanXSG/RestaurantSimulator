@@ -4,10 +4,9 @@ import java.util.Iterator;
 
 import DataStructures.Interfaces.*;
 
+
 /**
- * @author Jonathan Santiagp
- *
- * @param <E>
+ * @author Jonathan , Adahid
  */
 public class XArrayList<E> implements XList<E>{
 	private E[] elements; 
@@ -105,22 +104,55 @@ public class XArrayList<E> implements XList<E>{
 		elements = newElement; 
 	}
 
+	/**
+	 * Method to shift the elements of the internal array to the right
+	 * @param lower index to start from
+	 * @param upper index that will be moved
+	 */
 	private void shiftToRight(int lower, int upper) { 
 		for (int pos = upper; pos >= lower; pos--)
 			elements[pos+1] = elements[pos]; 
 	}
 
+	/**
+	 * Method to shift the elements of the internal array to the left
+	 * @param lower index to start from
+	 * @param upper index that will be moved
+	 */
 	private void shiftToLeft(int lower, int upper) { 
 		for (int pos = lower; pos <= upper; pos++)
 			elements[pos] = elements[pos+1]; 
 	}
 
 	
-
 	@Override
 	public Iterator<E> iterator() {
 		// TODO Auto-generated method stub
-		return null;
+		return new ArrayIterator();
+	}
+	
+	/**
+	 * @author Adahid Galan
+	 * @param <E>
+	 */
+	private class ArrayIterator implements Iterator<E>{
+		
+		private int counter = 1;
+
+		@Override
+		public boolean hasNext() {
+			// TODO Auto-generated method stub
+			return (elements[counter-1] != null);
+		}
+
+		@Override
+		public E next() {
+			// TODO Auto-generated method stub
+			E tmp = (E) elements[counter-1];
+			counter++;
+			return tmp;
+		}
+		
 	}
 
 	

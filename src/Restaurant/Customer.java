@@ -1,5 +1,8 @@
 package Restaurant;
 
+/**
+ * @author Jonathan , Adahid
+ */
 public class Customer {
 
 	private int arrivalTurn;
@@ -21,6 +24,7 @@ public class Customer {
 	}
 	
 	/**
+	 * Constructor for creating a Customer object with all it's necessary parameters. 
 	 * @param arrivalTurn
 	 * @param uid
 	 * @param orderTime
@@ -107,7 +111,7 @@ public class Customer {
 	}
 	
 	/**
-	 * @return the orderTaken
+	 * @return true if order was taken or patience ran out
 	 */
 	public boolean isOrderTaken() {
 		return orderTaken;
